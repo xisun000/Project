@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Who Gets the Microscope? — Lab Scheduler</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🔬 Dr. Haque's Lab Equipment Scheduler</h1>
+    <p>Smart conflict-free booking for Microscope, Centrifuge & Spectrophotometer</p>
+  </header>
+
+  <main class="container">
+    <!-- Left Panel: Controls & Forms -->
+    <section class="sidebar">
+      <!-- Machine Status Panel -->
+      <div class="card">
+        <h2>🛠️ Machine Status (Out of Service Control)</h2>
+        <p class="hint">Toggle if a machine breaks down. Affected bookings will auto-reschedule.</p>
+        <div id="machine-controls" class="machine-list"></div>
+      </div>
+
+      <!-- Request Submission Form -->
+      <div class="card">
+        <h2>📋 Submit Equipment Request</h2>
+        <form id="request-form">
+          <label>Role / Requester Type
+            <select id="role">
+              <option value="student">Student Researcher</option>
+              <option value="haque">Dr. Haque (Admin Overrule)</option>
+            </select>
+          </label>
+
+          <label>Name
+            <input type="text" id="name" placeholder="e.g., Ayesha Rahman" required />
+          </label>
+
+          <label>Equipment Needed
+            <select id="machine">
+              <option value="Microscope">Microscope</option>
+              <option value="Centrifuge">Centrifuge</option>
+              <option value="Spectrophotometer">Spectrophotometer (Needs extra patience)</option>
+            </select>
+          </label>
+
+          <label>Duration (Hours — Uninterruptible Block)
+            <input type="number" id="duration" min="0.5" max="8" step="0.5" value="2" required />
+          </label>
+
+          <label>Preferred Day
+            <select id="preferred-day">
+              <option value="Any">Anytime (Flexible)</option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+            </select>
+          </label>
+
+          <label>Urgency / Constraint
+            <select id="urgency">
+              <option value="1">Low — Flexible / Not urgent</option>
+              <option value="2">Medium — Specific day preferred</option>
+              <option value="3">Critical — Samples expire / Submission next week</option>
+            </select>
+          </label>
+
+          <label>Notes (Optional)
+            <input type="text" id="notes" placeholder="e.g., Samples expire Thursday" />
+          </label>
+
+          <button type="submit" class="btn-primary">Add to Schedule</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Right Panel: Generated Schedule & Pending Queue -->
+    <section class="content">
+      <div class="card">
+        <div class="schedule-header">
+          <h2>📅 Weekly Workable Schedule (9:00 AM – 5:00 PM)</h2>
+          <button id="reset-demo" class="btn-secondary">Load Sample Data</button>
+        </div>
+        <div id="alerts"></div>
+        <div id="schedule-board" class="schedule-grid"></div>
+      </div>
+
+      <div class="card">
+        <h2>📌 All Requests & Dr. Haque Overrule Controls</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Requester</th>
+              <th>Machine</th>
+              <th>Duration</th>
+              <th>Urgency</th>
+              <th>Assigned Slot</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="request-table"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
